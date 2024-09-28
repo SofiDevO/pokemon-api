@@ -1,0 +1,35 @@
+---
+interface Props {
+    name: string;
+    url: string;
+}
+
+
+const { name, url } = Astro.props;
+const id = url.split("/")[url.split("/").length - 2];
+const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+
+---
+
+<a href={`/pokemons/${name}`} class="flex flex-col items-center">
+  <img
+    src={imageUrl}
+    alt={name}
+  />
+  <h2 class="text-gradient font-bold text-3xl capitalize">{name}</h2>
+</a>
+
+<style>
+  a {
+    background-color: #12002a;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 0 2px rgba(59, 255, 232, 0.1);
+    transition: all 0.3s;
+    &:hover {
+      box-shadow: 0 0 0 2px rgba(59, 255, 232, 0.5);
+      transform: translate(0, -0.5rem);
+    }
+}
+
+</style>

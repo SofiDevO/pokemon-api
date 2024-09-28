@@ -1,0 +1,36 @@
+---
+import PokemonCard from "@atoms/PokemonCard/PokemonCard.astro";
+import type { PokemonListResponse } from "@interfaces/pokemonList.response";
+
+const baseUrl = "https://pokeapi.co/api/v2/";
+const response = await fetch(`${baseUrl}pokemon`);
+
+const data = (await response.json()) as PokemonListResponse;
+console.log(data);
+---
+
+<section class="w-full flex flex-col justify-center items-center px-[2rem]">
+  <h1 class="text-gradient text-center font-bold text-7xl">Pokemons</h1>
+  <ul class="grid-container">
+    {data.results.map((pokemon) => <li>
+        <PokemonCard    name={pokemon.name}  url={pokemon.url}/>
+    </li>)}
+  </ul>
+</section>
+
+<style>
+  .grid-container {
+    margin-top: 3rem;
+    width: 100%;
+    max-width: 1300px;
+    place-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+  }
+  li {
+    text-align: center;
+    font-size: 2rem;
+  }
+</style>

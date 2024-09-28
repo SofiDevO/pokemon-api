@@ -1,0 +1,27 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/organisms/header/Header.astro";
+import GradientBg from "@components/atoms/GradientBg/GradientBg.astro";
+
+const pathName = Astro.url.pathname;
+
+---
+
+<html lang="en">
+  <head>
+    {
+      pathName === "/"
+        ? <BaseHead  />
+        : <BaseHead title={pathName.charAt(1).toUpperCase() + pathName.slice(2).split("/")[0]} />
+    }
+  </head>
+  <body>
+    <GradientBg>
+      <Header/>
+      <main class="flex flex-col items-center justify-center pt-[10rem]">
+        <slot />
+      </main>
+    </GradientBg>
+    <!-- <Footer /> -->
+  </body>
+</html>

@@ -1,0 +1,28 @@
+---
+import type { GetStaticPaths } from "astro";
+import Layout from "@layouts/Layout.astro";
+import Button from "@components/atoms/Button/Button.astro";
+export const getStaticPaths = (() => {
+    return [
+        {params: {name: "bulbasaur"}},
+    ];
+}) satisfies GetStaticPaths;
+
+const {name} = Astro.params;
+---
+
+<script>
+    import { prevPage } from "@components/utils/prevPage";
+    prevPage("volver");
+</script>
+<Layout >
+
+    <section class="flex flex-col pt-2 items-center justify-center w-full max-w-[1300px]">
+        <article>
+            <h1 class="text-gradient text-8xl font-semibold" >Hola {name}</h1>
+            <Button text="Volver" id="volver"/>
+
+        </article>
+    </section>
+
+</Layout>
