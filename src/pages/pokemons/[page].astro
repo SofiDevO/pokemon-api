@@ -1,0 +1,70 @@
+---
+import type { GetStaticPaths } from "astro";
+import Layout from "@layouts/Layout.astro";
+import PokemonCard from "@atoms/PokemonCard/PokemonCard.astro";
+
+import type { PokemonListResponse } from "@interfaces/pokemonList.response";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const baseUrl = "https://pokeapi.co/api/v2/pokemon?limit=151";
+  const response = await fetch(baseUrl);
+  const { results } = (await response.json()) as PokemonListResponse;
+  return paginate(results, { pageSize: 10 });
+}) satisfies GetStaticPaths;
+const { page } = Astro.props;
+
+---
+
+<Layout>
+  <section class="w-full flex flex-col justify-center items-center px-[2rem]">
+    <ul class="grid-container min-h-[565px]">
+      {
+        page.data.map(({ name, url }) => (
+          <li>
+            <PokemonCard
+              name={name}
+              url={url}
+              backUrl={page.currentPage.toString()}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+  <section
+    class="flex px-10 mt-10 gap-20 items-center justify-between max-w-[1300px]"
+  >
+    <a class:list={["btn", { disabled: !page.url.prev }]} href={page.url.prev}>
+      Prev
+    </a>
+    <span class="text-2xl">
+      {page.currentPage}
+    </span>
+    <a class:list={["btn", { disabled: !page.url.next }]} href={page.url.next}
+      >Next</a
+    >
+  </section>
+</Layout>
+
+<style>
+  .grid-container {
+    margin-top: 3rem;
+    width: 100%;
+    max-width: 1300px;
+    place-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+  }
+  li {
+    text-align: center;
+    font-size: 2rem;
+  }
+  .btn {
+    @apply bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white font-bold py-2 px-4 rounded;
+  }
+  .disabled {
+    background: gray;
+  }
+</style>

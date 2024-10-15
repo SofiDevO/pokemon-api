@@ -1,26 +1,42 @@
 ---
 interface Props {
-    name: string;
-    url: string;
+  name: string;
+  url: string;
+  isDetail?: boolean;
+  audioSrc?: string;
+  backUrl?: string;
 }
 
-
-const { name, url } = Astro.props;
+const { name, url, isDetail = false, audioSrc, backUrl } = Astro.props;
 const id = url.split("/")[url.split("/").length - 2];
 const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
-
 ---
 
-<a href={`/pokemons/${name}`} class="flex flex-col items-center">
-  <img
-    src={imageUrl}
-    alt={name}
-  />
-  <h2 class="text-gradient font-bold text-3xl capitalize">{name}</h2>
-</a>
+{
+  isDetail ? (
+    <article class=" flex  items-center  group min-h-[60dvh]">
+      <div class="flex flex-col items-start self-start pt-5 gap-10">
+      <img class="max-w-2xl hover:scale-110" src={imageUrl} alt={name}  transition:name={`${name}-image`}/>
+      <a class="mt-10 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white font-bold py-2 px-4 rounded" href={`/pokemons/${backUrl}`}>Back</a>
+      </div>
+      <div class="flex flex-col pt-10 justify-start items-start self-start">
+        <h2 class="text-gradient font-bold text-6xl capitalize">{name}</h2>
+        <audio controls class="mt-10 mb-5">
+          <source src={audioSrc} type="audio/ogg" />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </article>
+  ) : (
+    <a href={`/pokemons/${name}`} class="card flex flex-col items-center">
+      <img src={imageUrl} alt={name} transition:name={`${name}-image`} />
+      <h2 class="text-gradient font-bold text-3xl capitalize flex gap-3 items-center"><span> #{id}</span> {name}</h2>
+    </a>
+  )
+}
 
 <style>
-  a {
+  .card {
     background-color: #12002a;
     padding: 1rem;
     border-radius: 0.5rem;
@@ -30,6 +46,5 @@ const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
       box-shadow: 0 0 0 2px rgba(59, 255, 232, 0.5);
       transform: translate(0, -0.5rem);
     }
-}
-
+  }
 </style>
