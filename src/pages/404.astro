@@ -13,7 +13,12 @@ import Button from "@components/atoms/Button/Button.astro";
   <section class="error">
     <Title title="404 NOT FOUND" size="big" />
     <p class="error__message">La pagina a la que tratas de acceder no existe</p>
-    <Button text="Volver" id="backButton"/>
+    <a
+    class="mt-10 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white font-bold py-2 px-4 rounded"
+    href='/pokemons/1'
+  >
+    Back
+  </a>
   </section>
 </LayoutNoHeader>
 

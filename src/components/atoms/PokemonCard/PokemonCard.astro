@@ -16,8 +16,18 @@ const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
   isDetail ? (
     <article class=" flex  items-center  group min-h-[60dvh]">
       <div class="flex flex-col items-start self-start pt-5 gap-10">
-      <img class="max-w-2xl hover:scale-110" src={imageUrl} alt={name}  transition:name={`${name}-image`}/>
-      <a class="mt-10 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white font-bold py-2 px-4 rounded" href={`/pokemons/${backUrl}`}>Back</a>
+        <img
+          class="max-w-2xl hover:scale-110"
+          src={imageUrl}
+          alt={name}
+          transition:name={`${name}-image`}
+        />
+        <a
+          class="mt-10 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white font-bold py-2 px-4 rounded"
+          href={`${backUrl}`}
+        >
+          Back
+        </a>
       </div>
       <div class="flex flex-col pt-10 justify-start items-start self-start">
         <h2 class="text-gradient font-bold text-6xl capitalize">{name}</h2>
@@ -30,7 +40,9 @@ const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
   ) : (
     <a href={`/pokemons/${name}`} class="card flex flex-col items-center">
       <img src={imageUrl} alt={name} transition:name={`${name}-image`} />
-      <h2 class="text-gradient font-bold text-3xl capitalize flex gap-3 items-center"><span> #{id}</span> {name}</h2>
+      <h2 class="text-gradient font-bold text-3xl capitalize flex gap-3 items-center">
+        <span> #{id}</span> {name}
+      </h2>
     </a>
   )
 }
